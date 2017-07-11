@@ -44,14 +44,19 @@ public class ListAdapter extends ArrayAdapter<Note> {
         if(output == null){
             output = LayoutInflater.from(context).inflate(R.layout.item_note,parent,false);
             ListItemViewHolder holder = new ListItemViewHolder(output);
-            output.setTag(holder);
+            //output.setTag(holder);
         }
 
-        ListItemViewHolder holder = (ListItemViewHolder) output.getTag();
+        //ListItemViewHolder holder = (ListItemViewHolder) output.getTag();
         Note note = getItem(position);
 
-        holder.titleTextView.setText(note.getTitle());
-        holder.descTextView.setText(note.getDescription());
+//        holder.titleTextView.setText(note.getTitle());
+//        holder.descTextView.setText(note.getDescription());
+
+        TextView titleTextView = output.findViewById(R.id.title);
+        titleTextView.setText(note.getTitle());
+        TextView descTextView = output.findViewById(R.id.description);
+        descTextView.setText(note.getDescription());
 
         return output;
     }
