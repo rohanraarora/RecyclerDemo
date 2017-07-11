@@ -4,25 +4,25 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.View;
 
 import java.util.ArrayList;
 
-public class ListActivity extends AppCompatActivity {
+public class RecyclerActivity extends AppCompatActivity {
 
     ArrayList<Note> notes;
-    ListView listView;
-    ListAdapter adapter;
+    RecyclerView recyclerView;
+    RecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_recycler);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -35,17 +35,13 @@ public class ListActivity extends AppCompatActivity {
         });
 
         notes = Note.getRandomNotes(1000);
-        listView = (ListView) findViewById(R.id.listView);
-        adapter = new ListAdapter(this,notes);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Snackbar.make(adapterView,notes.get(i).getTitle(),Snackbar.LENGTH_LONG).show();
-            }
-        });
+        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        adapter = new RecyclerAdapter(this,notes);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
+
 
     private void addNote(){
         int size = notes.size();
@@ -61,7 +57,7 @@ public class ListActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
         else {
-            Snackbar.make(listView,"No notes", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(recyclerView,"No notes", Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -87,4 +83,5 @@ public class ListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
